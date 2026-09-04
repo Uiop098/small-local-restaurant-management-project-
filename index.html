@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mess Management System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Navigation -->
+    <header class="navbar">
+      <div class="brand">
+        <span class="brand-icon">🍲</span>
+        <div>
+          <h1>Mess Management System</h1>
+          <span class="subtext">Daily Meal Ledger & Attendance Tracker</span>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <label for="csvFileInput" class="btn btn-outline">
+          📂 Import CSV
+          <input type="file" id="csvFileInput" accept=".csv" />
+        </label>
+        <button id="exportBtn" class="btn btn-excel">📥 Export to Excel (.csv)</button>
+        <button id="clearBtn" class="btn btn-danger-outline">🗑️ Reset Data</button>
+      </div>
+    </header>
+
+    <!-- Operational KPI Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Total Entries</span>
+        <span class="kpi-value" id="kpiTotalEntries">0</span>
+      </div>
+      <div class="kpi-card eating">
+        <span class="kpi-label">Meals Served (Eating)</span>
+        <span class="kpi-value" id="kpiEating">0</span>
+      </div>
+      <div class="kpi-card skipped">
+        <span class="kpi-label">Meals Skipped</span>
+        <span class="kpi-value" id="kpiSkipped">0</span>
+      </div>
+      <div class="kpi-card guests">
+        <span class="kpi-label">Total Guest Headcount</span>
+        <span class="kpi-value" id="kpiGuests">0</span>
+      </div>
+      <div class="kpi-card revenue">
+        <span class="kpi-label">Total Billed</span>
+        <span class="kpi-value" id="kpiTotalRevenue">₹0.00</span>
+      </div>
+    </section>
+
+    <!-- Meal Entry Form -->
+    <section class="entry-panel">
+      <h2>Log New Meal Entry</h2>
+      <form id="mealForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="memberName">Member Name</label>
+            <input type="text" id="memberName" placeholder="e.g., Rohit Sharma" required />
+          </div>
+          <div class="form-group">
+            <label for="roomNumber">Room / Block</label>
+            <input type="text" id="roomNumber" placeholder="e.g., B-204" required />
+          </div>
+          <div class="form-group">
+            <label for="mealDate">Date</label>
+            <input type="date" id="mealDate" required />
+          </div>
+          <div class="form-group">
+            <label for="mealType">Meal Type</label>
+            <select id="mealType">
+              <option value="Breakfast">Breakfast (₹30)</option>
+              <option value="Lunch" selected>Lunch (₹60)</option>
+              <option value="Snacks">Snacks (₹20)</option>
+              <option value="Dinner">Dinner (₹60)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mealStatus">Status</label>
+            <select id="mealStatus">
+              <option value="Eating">Eating</option>
+              <option value="Skipped">Skipped (Rebate / ₹0)</option>
+              <option value="Guest">Guest Meal</option>
+            </select>
+          </div>
+          <div class="form-group" id="guestCountGroup">
+            <label for="guestCount">Guest Count</label>
+            <input type="number" id="guestCount" value="0" min="0" max="20" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary submit-btn">➕ Record Meal</button>
+      </form>
+    </section>
+
+    <!-- Filter & Table View -->
+    <main class="table-section">
+      <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="🔍 Search member or room..." />
+        <select id="filterMeal">
+          <option value="All">All Meals</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Snacks">Snacks</option>
+          <option value="Dinner">Dinner</option>
+        </select>
+        <select id="filterStatus">
+          <option value="All">All Statuses</option>
+          <option value="Eating">Eating</option>
+          <option value="Skipped">Skipped</option>
+          <option value="Guest">Guest</option>
+        </select>
+      </div>
+
+      <div class="table-responsive">
+        <table id="messTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Member Name</th>
+              <th>Room</th>
+              <th>Meal</th>
+              <th>Status</th>
+              <th>Guests</th>
+              <th>Charged (₹)</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div id="emptyNotice" class="empty-notice hidden">No matching meal entries found.</div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span id="rowCount">0 records</span>
+      <span id="syncIndicator">💾 Auto-saved to LocalStorage</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
