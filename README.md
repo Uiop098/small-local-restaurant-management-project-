@@ -444,13 +444,17 @@ No package installation is required.
 
 Option 2 — Run a Local Server
 
-If Python is installed:
+You can run the HTML/CSS/JavaScript project using PHP's built-in development server.
 
-python3 -m http.server 8000
+If PHP is installed:
+
+php -S localhost:8000
 
 Then open:
 
 http://localhost:8000
+
+«PHP is only being used as a local HTTP server. The project itself is built with HTML, CSS, and JavaScript.»
 
 ---
 
@@ -464,14 +468,27 @@ Enter the project:
 
 cd small-local-restaurant-management-project-
 
-Start a local server:
+Install PHP in Termux if necessary:
 
-python3 -m http.server 8080
+pkg install php -y
 
-Open:
+Start the local server:
+
+php -S 0.0.0.0:8080
+
+Open the application in your browser:
 
 http://localhost:8080
 
+To access it from another device on the same Wi-Fi network, use your phone's local IP address:
+
+http://YOUR_PHONE_IP:8080
+
+For example:
+
+http://192.168.1.10:8080
+
+Press "CTRL+C" in Termux to stop the server.
 ---
 
 🌐 Deployment
